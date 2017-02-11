@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My Buttons</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngFor="let button of buttons">
+    <!--<ion-card-header>
+
+    </ion-card-header>-->
+    <ion-card-content>
+      <button ion-button block (click)="doAction([(button)])">{{button.label}}</button>
+      <p>{{button.description}}</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

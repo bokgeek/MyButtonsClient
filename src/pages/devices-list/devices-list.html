@@ -1,0 +1,30 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Devices List</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div>These are the devices that sent their data</div>
+    <ion-card *ngFor="let post of posts">
+        <ion-card-header>
+            Device
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>{{post.label}}</ion-item>
+                <ion-item>{{post.content}}</ion-item>
+                <ion-item>{{post.user}}</ion-item>
+                <ion-item>{{post.device}}</ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>
