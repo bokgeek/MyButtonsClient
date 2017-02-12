@@ -50,7 +50,7 @@ export class ButtonService implements OnInit {
                 break;
 
             case 'App':
-                this.actionApp(button.action); // Sends a mail, for now not opens other apps
+                this.actionApp(button.action); // Open apps wich has something like mailto: / tel: ...
                 break;
 
             default:
