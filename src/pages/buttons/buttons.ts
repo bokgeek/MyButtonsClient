@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { SpinnerDialog } from 'ionic-native';
-
 import { ButtonService } from './../../providers/buttons-service';
 import { ButtonModel } from './buttons.model';
+import { BusyIndicatorService } from './../../providers/busy-indicator.service';
 
 @Component({
     selector: 'mb-page-buttons',
@@ -14,7 +13,8 @@ export class ButtonsPageComponent {
 
     buttons: Array<any>;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private buttonService: ButtonService) { }
+    constructor(public navCtrl: NavController, public navParams: NavParams, private buttonService: ButtonService,
+                private busyIndicatorService: BusyIndicatorService) { }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad ButtonsPage');
@@ -34,16 +34,20 @@ export class ButtonsPageComponent {
     }
 
     getButtons() {
-        SpinnerDialog.show();
+        this.busyIndicatorService.loadingAnimationStart();
         this.buttonService.getButtons().subscribe(
             data => {
                 this.buttons = data;
                 console.log(data);
-                SpinnerDialog.hide();
+                if (this.busyIndicatorService.isBusyIndicatorVisible()) {
+                     this.busyIndicatorService.loadingAnimationEnd();
+                }
             },
             err => {
                 console.log(err);
-                SpinnerDialog.hide();
+                if (this.busyIndicatorService.isBusyIndicatorVisible()) {
+                     this.busyIndicatorService.loadingAnimationEnd();
+                }
             },
             () => console.log('Yeah!! I get all buttons')
         );

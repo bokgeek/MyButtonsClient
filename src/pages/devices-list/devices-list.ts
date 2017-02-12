@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { SpinnerDialog } from 'ionic-native';
-
 import { PostService } from './../../providers/posts-service';
+import { BusyIndicatorService } from './../../providers/busy-indicator.service';
 
 @Component({
     selector: 'mb-devices-list',
@@ -14,7 +13,8 @@ export class DevicesListComponent {
 
     posts: Array<any>;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private postService: PostService) { }
+    constructor(public navCtrl: NavController, public navParams: NavParams, private postService: PostService,
+                private busyIndicatorService: BusyIndicatorService) { }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad DevicesListPage');
@@ -33,16 +33,20 @@ export class DevicesListComponent {
     }
 
     getPosts() {
-        SpinnerDialog.show();
+        this.busyIndicatorService.loadingAnimationStart();
         this.postService.getPosts().subscribe(
             data => {
                 this.posts = data;
                 console.log(data);
-                SpinnerDialog.hide();
+                if (this.busyIndicatorService.isBusyIndicatorVisible()) {
+                     this.busyIndicatorService.loadingAnimationEnd();
+                }
             },
             err => {
                 console.log(err);
-                SpinnerDialog.hide();
+                if (this.busyIndicatorService.isBusyIndicatorVisible()) {
+                     this.busyIndicatorService.loadingAnimationEnd();
+                }
             },
             () => console.log('Yeah!! I get all posts')
         );

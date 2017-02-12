@@ -7,6 +7,7 @@ import { ButtonsPageComponent } from './../pages/buttons/buttons';
 import { ButtonService } from './../providers/buttons-service';
 import { DevicesListComponent } from './../pages/devices-list/devices-list';
 import { PostService } from './../providers/posts-service';
+import { BusyIndicatorService } from './../providers/busy-indicator.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,6 @@ import { PostService } from './../providers/posts-service';
     ButtonsPageComponent,
     DevicesListComponent
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ButtonService, PostService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ButtonService, PostService, BusyIndicatorService]
 })
 export class AppModule {}
