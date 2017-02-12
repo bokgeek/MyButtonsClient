@@ -89,7 +89,7 @@ export class ButtonService implements OnInit {
         infoPost.user = 'Default User';
 
         if (Device.uuid) {
-            infoPost.device = 'Device: ' + Device.model + 'UUID: ' +
+            infoPost.device = 'Device: ' + Device.model + ' UUID: ' +
                 Device.uuid + ' Platform: ' + Device.platform + ' Version: ' + Device.version;
         }else {
             infoPost.device = 'Browser';
