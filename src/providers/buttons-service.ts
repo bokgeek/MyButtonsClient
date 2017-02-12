@@ -3,15 +3,17 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Platform, AlertController } from 'ionic-angular';
-import { InAppBrowser, Device, SpinnerDialog, Toast } from 'ionic-native';
+import { InAppBrowser, Device, Toast } from 'ionic-native';
 
 import { ButtonModel } from './../pages/buttons/buttons.model';
 import { InfoModel } from './../app/models/info.model';
+import { BusyIndicatorService } from './busy-indicator.service';
 
 @Injectable()
 export class ButtonService implements OnInit {
 
-    constructor(private platform: Platform, public http: Http, public alertCtrl: AlertController) {
+    constructor(private platform: Platform, public http: Http, public alertCtrl: AlertController,
+                private busyIndicatorService: BusyIndicatorService) {
         console.log('Hello ButtonService Provider');
         this.ngOnInit(); // ngOnInit is not fired for services
     }
@@ -74,7 +76,7 @@ export class ButtonService implements OnInit {
 
     // Posts device settings and, optionally, comments (input)
     postData(button: ButtonModel, input: string) {
-        SpinnerDialog.show();
+        this.busyIndicatorService.loadingAnimationStart();
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -103,7 +105,9 @@ export class ButtonService implements OnInit {
         this.http.post('https://post-castle-74525.herokuapp.com/api/infos', postParams, options)
             .subscribe(data => {
                 console.log(data['_body']);
-                SpinnerDialog.hide();
+                if (this.busyIndicatorService.isBusyIndicatorVisible()) {
+                     this.busyIndicatorService.loadingAnimationEnd();
+                }
                 if (this.platform.is('cordova')) {
                     Toast.show('Post sent :)', '3000', 'center').subscribe(
                         toast => {
@@ -114,7 +118,9 @@ export class ButtonService implements OnInit {
 
             }, error => {
                 console.log(error); // Error getting the data
-                SpinnerDialog.hide();
+                if (this.busyIndicatorService.isBusyIndicatorVisible()) {
+                     this.busyIndicatorService.loadingAnimationEnd();
+                }
                 if (this.platform.is('cordova')) {
                     Toast.show('Post failed! :(', '3000', 'center').subscribe(
                         toast => {
