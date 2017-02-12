@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.app800286" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<?xml version="1.0.1" encoding="UTF-8" standalone="yes"?>
+<widget id="com.ionicframework.app800286" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>My Buttons</name>
   <description>My Buttons</description>
   <author email="bok.geek@gmail.com" href="">BoK Geek</author>
