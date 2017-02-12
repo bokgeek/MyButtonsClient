@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Platform, AlertController } from 'ionic-angular';
-import { InAppBrowser, Device } from 'ionic-native';
+import { InAppBrowser, Device, SpinnerDialog } from 'ionic-native';
 
 import { ButtonModel } from './../pages/buttons/buttons.model';
 import { InfoModel } from './../app/models/info.model';
@@ -74,6 +74,7 @@ export class ButtonService implements OnInit {
 
     // Posts device settings and, optionally, comments (input)
     postData(button: ButtonModel, input: string) {
+        SpinnerDialog.show();
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -86,20 +87,20 @@ export class ButtonService implements OnInit {
         infoPost.user = 'Default User';
         infoPost.device = Device.model;
 
-        console.log('Texto del Prompt: ' + input);
-
         let postParams = {
             label: infoPost.label,
             content: input,
             user: infoPost.user,
-            device: infoPost.device + ' ' + infoPost.content,
+            device: 'Device: ' + infoPost.device + ' ' + infoPost.content,
         };
 
         this.http.post('https://post-castle-74525.herokuapp.com/api/infos', postParams, options)
             .subscribe(data => {
                 console.log(data['_body']);
+                SpinnerDialog.hide();
             }, error => {
                 console.log(error); // Error getting the data
+                SpinnerDialog.hide();
             });
     }
 
