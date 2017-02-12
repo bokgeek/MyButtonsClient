@@ -83,15 +83,21 @@ export class ButtonService implements OnInit {
 
         let infoPost: InfoModel = new InfoModel();
         infoPost.label = new Date(Date.now()).toLocaleString();
-        infoPost.content = 'UUID: ' + Device.uuid + ' Platform: ' + Device.platform + ' Version: ' + Device.version;
+        infoPost.content = input;
         infoPost.user = 'Default User';
-        infoPost.device = Device.model;
+
+        if (Device.uuid) {
+            infoPost.device = 'Device: ' + Device.model + 'UUID: ' +
+                Device.uuid + ' Platform: ' + Device.platform + ' Version: ' + Device.version;
+        }else {
+            infoPost.device = 'Browser';
+        }
 
         let postParams = {
             label: infoPost.label,
-            content: input,
+            content: infoPost.content,
             user: infoPost.user,
-            device: 'Device: ' + infoPost.device + ' ' + infoPost.content
+            device: infoPost.device
         };
 
         this.http.post('https://post-castle-74525.herokuapp.com/api/infos', postParams, options)
