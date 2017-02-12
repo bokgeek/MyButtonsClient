@@ -12,10 +12,10 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <div class='div-header'>
+    <!--<div class='div-header'>
         <p>These are the posts sended. They are retrieved from an external server, as a log.</p>
         <p>This page is not for client use, it's here just for demo purposes. These messages should have been processed by the API configured in each button, taking actions recovered from the post context.</p>
-    </div>
+    </div>-->
     <ion-card *ngFor="let post of posts">
         <ion-card-header class="card-header">
             <ion-icon name="contact" class="icon"></ion-icon>
@@ -36,3 +36,8 @@
         </ion-card-content>
     </ion-card>
 </ion-content>
+<ion-footer>
+    <div class='div-class'>
+        <p class='p-class-footer'>These are the posts sended. They are retrieved from an external server. These messages should have been processed by the API configured in each button.</p>
+    </div>
+</ion-footer>
