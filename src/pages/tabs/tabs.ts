@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HomePage } from '../home/home';
+import { HomePageComponent } from '../home/home';
 import { ButtonsPageComponent } from './../buttons/buttons';
 import { DevicesListComponent } from './../devices-list/devices-list';
 
@@ -10,7 +10,7 @@ import { DevicesListComponent } from './../devices-list/devices-list';
 export class TabsPageComponent {
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    tab1Root: any = HomePage;
+    tab1Root: any = HomePageComponent;
     tab2Root: any = ButtonsPageComponent;
     tab3Root: any = DevicesListComponent;
 

@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyButtonsComponent } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { HomePageComponent } from '../pages/home/home';
 import { TabsPageComponent } from '../pages/tabs/tabs';
 import { ButtonsPageComponent } from './../pages/buttons/buttons';
 import { ButtonService } from './../providers/buttons-service';
@@ -11,7 +11,7 @@ import { PostService } from './../providers/posts-service';
 @NgModule({
   declarations: [
     MyButtonsComponent,
-    HomePage,
+    HomePageComponent,
     TabsPageComponent,
     ButtonsPageComponent,
     DevicesListComponent
@@ -22,7 +22,7 @@ import { PostService } from './../providers/posts-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyButtonsComponent,
-    HomePage,
+    HomePageComponent,
     TabsPageComponent,
     ButtonsPageComponent,
     DevicesListComponent
