@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { InAppBrowser, Device } from 'ionic-native';
 
 import { ButtonModel } from './../pages/buttons/buttons.model';
@@ -11,7 +11,7 @@ import { InfoModel } from './../app/models/info.model';
 @Injectable()
 export class ButtonService implements OnInit {
 
-    constructor(private platform: Platform, public http: Http) {
+    constructor(private platform: Platform, public http: Http, public alertCtrl: AlertController) {
         console.log('Hello ButtonService Provider');
         this.ngOnInit(); // ngOnInit is not fired for services
     }
@@ -59,6 +59,21 @@ export class ButtonService implements OnInit {
     }
 
     actionPost(button: ButtonModel) {
+
+        // Ask for comments
+        this.showPrompt(button);
+    }
+
+    actionBrowser(url: string) {
+        new InAppBrowser(url, '_system');
+    }
+
+    actionApp(url: string) {
+        new InAppBrowser(url, '_system');
+    }
+
+    // Posts device settings and, optionally, comments (input)
+    postData(button: ButtonModel, input: string) {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -71,13 +86,13 @@ export class ButtonService implements OnInit {
         infoPost.user = 'Default User';
         infoPost.device = Device.model;
 
-        console.log(button);
+        console.log('Texto del Prompt: ' + input);
 
         let postParams = {
             label: infoPost.label,
-            content: infoPost.content,
+            content: input,
             user: infoPost.user,
-            device: infoPost.device,
+            device: infoPost.device + ' ' + infoPost.content,
         };
 
         this.http.post('https://post-castle-74525.herokuapp.com/api/infos', postParams, options)
@@ -88,11 +103,35 @@ export class ButtonService implements OnInit {
             });
     }
 
-    actionBrowser(url: string) {
-        new InAppBrowser(url, '_system');
-    }
+    showPrompt(button: ButtonModel) {
 
-    actionApp(url: string) {
-        new InAppBrowser(url, '_system');
+        let prompt = this.alertCtrl.create({
+            title: 'Optional comments',
+            message: 'Type your comments if needed',
+            inputs: [
+                {
+                    name: 'title',
+                    placeholder: 'Title'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Send',
+                    handler: data => {
+                        console.log('Send clicked');
+                        this.postData(button, data.title);
+
+                    }
+                }
+            ]
+        });
+
+        prompt.present();
     }
 }
