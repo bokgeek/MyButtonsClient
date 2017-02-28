@@ -17,15 +17,15 @@ export class MyButtonsComponent {
             // Here you can do any higher level native things you might need.
             StatusBar.styleDefault();
             // Splashscreen.hide();
-            this.hideSplashScreen();
+            // -this.hideSplashScreen();
         });
     }
 
-    private hideSplashScreen() {
-        if (Splashscreen) {
-            setTimeout(() => {
-                Splashscreen.hide();
-            }, 100);
-        }
-    }
+    // private hideSplashScreen() {
+    //     if (Splashscreen) {
+    //         setTimeout(() => {
+    //             Splashscreen.hide();
+    //         }, 100);
+    //     }
+    // }
 }
